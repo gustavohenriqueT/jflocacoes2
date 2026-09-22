@@ -98,7 +98,7 @@
                 <span class="card-kicker">01 / LOCAÇÃO</span>
                 <h3>Locação de Caminhões</h3>
                 <p>Frota para diferentes necessidades de operação, com opções de veículos leves, médios e pesados.</p>
-                <div class="tags"><span>Toco</span><span>Truck</span><span>Carreta</span></div>
+                <div class="tags"><span>Toco</span><span>Pipa</span><span>Baú</span><span>Sider</span></div>
                 <a href="#contato" class="card-link" data-service="Locação de Caminhões">Tenho interesse <span>→</span></a>
             </article>
 
@@ -145,36 +145,65 @@
                 <p>Selecione um veículo para conhecer a aplicação e solicitar uma proposta.</p>
             </div>
             <div class="fleet-tabs" role="tablist" aria-label="Categorias da frota">
-                <button class="tab-btn active" type="button" data-target="toco">Toco</button>
-                <button class="tab-btn" type="button" data-target="truck">Truck</button>
-                <button class="tab-btn" type="button" data-target="bitrem">Bitrem</button>
+                <button class="tab-btn active" type="button" data-target="toco1">Toco</button>
+                <button class="tab-btn" type="button" data-target="toco2">Toco</button>
+                <button class="tab-btn" type="button" data-target="pipa1">Pipa</button>
+                <button class="tab-btn" type="button" data-target="pipa2">Pipa</button>
+                <button class="tab-btn" type="button" data-target="bau">Baú</button>
+                <button class="tab-btn" type="button" data-target="sider">Sider</button>
             </div>
         </div>
 
         <div class="fleet-content fade-element">
-            <div class="tab-pane active" id="tab-toco">
+            <!-- Caminhão Toco 1 -->
+            <div class="tab-pane active" id="tab-toco1">
                 <div class="fleet-main-image" style="background-image:url('assets/caminhao-toco.jpg')">
                     <div class="fleet-info"><span>FROTA JF</span><h3>Caminhão Toco</h3><p>Ideal para entregas urbanas e rotas de curta e média distância.</p></div>
-                    <div class="fleet-capacity"><strong>6 toneladas</strong><span>capacidade de carga*</span></div>
                 </div>
             </div>
-            <div class="tab-pane" id="tab-truck">
-                <div class="fleet-main-image" style="background-image:url('assets/caminhao-truck.jpg')">
-                    <div class="fleet-info"><span>FROTA JF</span><h3>Caminhão Truck</h3><p>Versátil para cargas médias e diferentes perfis de operação.</p></div>
-                    <div class="fleet-capacity"><strong>14 toneladas</strong><span>capacidade de carga*</span></div>
+            
+            <!-- Caminhão Toco 2 -->
+            <div class="tab-pane" id="tab-toco2">
+                <div class="fleet-main-image" style="background-image:url('assets/caminhao-toco2.jpg')">
+                    <div class="fleet-info"><span>FROTA JF</span><h3>Caminhão Toco</h3><p>Ideal para entregas urbanas e rotas de curta e média distância.</p></div>
                 </div>
-            </div>
-            <div class="tab-pane" id="tab-bitrem">
-                <div class="fleet-main-image" style="background-image:url('assets/carreta-bitrem.jpg')">
-                    <div class="fleet-info"><span>FROTA JF</span><h3>Carreta Bitrem</h3><p>Indicada para grandes volumes e operações de longa distância.</p></div>
-                    <div class="fleet-capacity"><strong>45 toneladas</strong><span>capacidade de carga*</span></div>
+            </div>    
+            
+            <!-- Caminhão Pipa 1 -->
+            <div class="tab-pane" id="tab-pipa1">
+                <div class="fleet-main-image" style="background-image:url('assets/caminhao-pipa.jpg')">
+                    <div class="fleet-info"><span>FROTA JF</span><h3>Caminhão Pipa</h3><p>Indicado para transporte e distribuição de água em obras, empresas e diferentes tipos de operações.</p></div>
                 </div>
             </div>
 
+            <!-- Caminhão Pipa 2 -->
+            <div class="tab-pane" id="tab-pipa2">
+                <div class="fleet-main-image" style="background-image:url('assets/caminhao-pipa2.jpg')">
+                    <div class="fleet-info"><span>FROTA JF</span><h3>Caminhão Pipa</h3><p>Indicado para transporte e distribuição de água em obras, empresas e diferentes tipos de operações.</p></div>
+                </div>
+            </div>
+
+            <!-- Caminhão Baú -->
+            <div class="tab-pane" id="tab-bau">
+                <div class="fleet-main-image" style="background-image:url('assets/caminhao-bau.jpg')">
+                    <div class="fleet-info"><span>FROTA JF</span><h3>Caminhão Baú</h3><p>Versátil para transporte de cargas diversas, oferecendo proteção e segurança durante todo o trajeto.</p></div>
+                </div>
+            </div>
+
+            <!-- Caminhão Sider -->
+            <div class="tab-pane" id="tab-sider">
+                <div class="fleet-main-image" style="background-image:url('assets/caminhao-sider.jpg')">
+                    <div class="fleet-info"><span>FROTA JF</span><h3>Caminhão Sider</h3><p>Ideal para transporte de cargas paletizadas e mercadorias que exigem praticidade e agilidade nas operações.</p></div>
+                </div>
+            </div>
+            
             <div class="fleet-thumbs">
-                <button class="thumb-item active" type="button" data-index="0" aria-label="Selecionar caminhão toco"><img src="assets/caminhao-toco.jpg" alt="Caminhão Toco"></button>
-                <button class="thumb-item" type="button" data-index="1" aria-label="Selecionar caminhão truck"><img src="assets/caminhao-truck.jpg" alt="Caminhão Truck"></button>
-                <button class="thumb-item" type="button" data-index="2" aria-label="Selecionar carreta bitrem"><img src="assets/carreta-bitrem.jpg" alt="Carreta Bitrem"></button>
+                <button class="thumb-item active" type="button" data-index="0" aria-label="Selecionar caminhão Toco"><img src="assets/caminhao-toco.jpg" alt="Caminhão Toco"></button>
+                <button class="thumb-item" type="button" data-index="1" aria-label="Selecionar caminhão Toco"><img src="assets/caminhao-toco2.jpg" alt="Caminhão Toco"></button>
+                <button class="thumb-item" type="button" data-index="2" aria-label="Selecionar caminhão Pipa"><img src="assets/caminhao-pipa.jpg" alt="Caminhão Pipa"></button>
+                <button class="thumb-item" type="button" data-index="3" aria-label="Selecionar caminhão Pipa"><img src="assets/caminhao-pipa2.jpg" alt="Caminhão Pipa"></button>
+                <button class="thumb-item" type="button" data-index="4" aria-label="Selecionar caminhão Bau"><img src="assets/caminhao-bau.jpg" alt="Caminhão Baú"></button>
+                <button class="thumb-item" type="button" data-index="5" aria-label="Selecionar caminhão Sider"><img src="assets/caminhao-sider.jpg" alt="Caminhão Sider"></button>
             </div>
 
             <a href="#contato" class="btn btn-primary fleet-cta" id="fleet-interest">TENHO INTERESSE NESTE VEÍCULO</a>
@@ -224,7 +253,7 @@
                 <h2>VAMOS MOVER<br><span class="text-blue">SUA CARGA</span></h2>
                 <p>Preencha os dados ao lado. Quanto mais informações você enviar, mais fácil será preparar o atendimento.</p>
 
-                <!-- [DADOS DE CONTATO]: Altere telefones e e-mails aqui -->
+                <!-- [DADOS DE CONTATO]: Alterar telefones e e-mails-->
                 <ul class="contact-list">
                     <li><strong><i class="fa-solid fa-phone"></i> Telefone / WhatsApp</strong><a href="tel:+551936525075">(19) 3652-5075</a> <a href="https://wa.me/5511993648272" target="_blank" rel="noopener">(11) 99364-8272</a></li>
                     <li><strong><i class="fa-solid fa-envelope"></i> E-mail comercial</strong><a href="mailto:jf-locacoes@uol.com.br">jf-locacoes@uol.com.br</a></li>
@@ -232,7 +261,7 @@
                     <li><strong><i class="fa-solid fa-clock"></i> Atendimento</strong>Seg–Sex 7h–20h · Sáb 8h–14h</li>
                 </ul>
 
-                <!-- [WHATSAPP LINK]: Altere o número da ligação no href -->
+                <!-- [WHATSAPP LINK]: Alterar o número da ligação -->
                 <a class="whatsapp-box" href="https://wa.me/5511993648272?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener">
                     <span>WhatsApp</span><strong>Falar com a equipe →</strong>
                 </a>
@@ -252,7 +281,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group"><label for="servico">Tipo de serviço</label><select id="servico" name="servico" required><option value="">Selecione...</option><option>Locação de Caminhões</option><option>Transporte de Cargas</option><option>Soluções Logísticas</option></select></div>
-                        <div class="form-group"><label for="veiculo">Tipo de veículo</label><select id="veiculo" name="veiculo"><option value="">Ainda não sei</option><option>Caminhão Toco</option><option>Caminhão Truck</option><option>Carreta Bitrem</option></select></div>
+                        <div class="form-group"><label for="veiculo">Tipo de veículo</label><select id="veiculo" name="veiculo"><option value="">Ainda não sei</option><option>Caminhão Toco</option><option>Caminhão Pipa</option><option>Caminhão Baú</option><option>Caminhão Sider</option></select></div>
                     </div>
                     <div class="form-row">
                         <div class="form-group"><label for="origem">Origem</label><input id="origem" type="text" name="origem" placeholder="Cidade / UF"></div>
@@ -291,7 +320,6 @@
     <span>WhatsApp</span><strong>Falar com a equipe</strong>
 </a>
 
-<!-- [ALTERAÇÃO]: Caminho original mantido -->
 <script src="js/main.js"></script>
 </body>
 </html>

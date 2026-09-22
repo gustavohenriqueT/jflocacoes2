@@ -35,8 +35,23 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentIndex = 0;
     let interval;
 
-    const vehicleNames = ["Caminhão Toco", "Caminhão Truck", "Carreta Bitrem"];
-    const vehicleValues = ["Caminhão Toco", "Caminhão Truck", "Carreta Bitrem"];
+    const vehicleNames = [
+    "Caminhão Toco",
+    "Caminhão Toco",
+    "Caminhão Pipa",
+    "Caminhão Pipa",
+    "Caminhão Baú",
+    "Caminhão Sider"
+    ];
+
+    const vehicleValues = [
+    "Caminhão Toco",
+    "Caminhão Toco",
+    "Caminhão Pipa",
+    "Caminhão Pipa",
+    "Caminhão Baú",
+    "Caminhão Sider"
+    ];
 
     function switchTab(index) {
         if (!tabButtons[index]) return;
