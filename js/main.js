@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     
     // ==========================================================================
-    // ANIMAÇÃO FLUIDA DE SCROLL (INTERSECTION OBSERVER)
+    // ANIMAÇÃO DE SCROLL (INTERSECTION OBSERVER)
     // ==========================================================================
     // Faz com que os elementos surjam suavemente ao rolar a página
     const observerOptions = {
@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("visible");
-                // Remova a barra ('//') da linha de baixo se quiser que anime apenas na primeira vez
-                // observer.unobserve(entry.target); 
             }
         });
     }, observerOptions);
@@ -75,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Passador automático das fotos da frota (6.5 segundos)
+    // Passador automático das fotos da frota
     function startAutoplay() {
         clearInterval(interval);
         interval = setInterval(() => switchTab((currentIndex + 1) % tabButtons.length), 6500);
@@ -155,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
         message.textContent = "";
 
         try {
-            // Requisição para o arquivo PHP de e-mail (Não modifique se o caminho continuar sendo enviar.php)
+            // Requisição para o arquivo PHP de e-mail
             const response = await fetch("enviar.php", {
                 method: "POST",
                 body: new FormData(form)

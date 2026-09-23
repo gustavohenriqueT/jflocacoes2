@@ -1,5 +1,5 @@
 /*============================================================================
-VARIÁVEIS DE COR E FONTES (Altere as cores principais aqui)
+VARIÁVEIS DE COR E FONTES
 ========================================================================== */
 :root {
 --bg: #080d16;
@@ -19,7 +19,6 @@ RESET E CONFIGURAÇÕES GERAIS
 ========================================================================== */
 
 * {margin:0; padding:0; box-sizing:border-box; }
-/* Fluidez: scroll-padding garante que ao clicar no menu, a secção não fique escondida atrás do cabeçalho */
 html { scroll-behavior:smooth; scroll-padding-top: 80px; }
 body { background:var(--bg); color:var(--white); font-family:var(--font); line-height:1.6; overflow-x:hidden; }
 a { color:inherit; }
@@ -216,7 +215,7 @@ footer { background:#060b13; border-top:1px solid var(--border); padding:65px 5%
 .floating-whatsapp strong { font-size:11px; }
 
 /* ==========================================================================
-CLASSES DE ANIMAÇÃO FLUIDA (FADE-IN NO SCROLL)
+FADE-IN NO SCROLL
 ========================================================================== */
 .fade-element {
 opacity: 0;
@@ -229,7 +228,7 @@ transform: translateY(0);
 }
 
 /* ==========================================================================
-MEDIA QUERIES (RESPONSIVIDADE AJUSTADA)
+MEDIA QUERIES
 ========================================================================== */
 @media (max-width:1000px) {
 .navbar { gap:15px; }
@@ -263,7 +262,7 @@ MEDIA QUERIES (RESPONSIVIDADE AJUSTADA)
 .section { padding:75px 5%; }
 .services-grid,.difference-grid { grid-template-columns:1fr; }
 
-/* FROTA - CORREÇÃO DE RESPONSIVIDADE E SCROLL HORIZONTAL */
+/* FROTA */
 .fleet-header { flex-direction:column; align-items:flex-start; }
 .fleet-tabs { width:100%; overflow-x:auto; flex-wrap:nowrap; padding-bottom:8px; -webkit-overflow-scrolling: touch; }
 .tab-btn { white-space:nowrap; flex-shrink:0; }
