@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const observerOptions = {
         root: null,
         rootMargin: "0px",
-        threshold: 0.15 // O elemento aparece quando 15% dele estiver visível
+        threshold: 0.15
     };
 
     const scrollObserver = new IntersectionObserver((entries, observer) => {
@@ -138,38 +138,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ==========================================================================
-    // ENVIO DO FORMULÁRIO (VIA AJAX PARA O enviar.php)
+    // ENVIO DO FORMULÁRIO (REDIRECIONA PARA O WHATSAPP COM OS DADOS PREENCHIDOS)
     // ==========================================================================
+    const WHATSAPP_NUMERO = "5519999988434"; // DDI + DDD + número, só dígitos
+
     const form = document.getElementById("form-contato");
     const message = document.getElementById("form-mensagem");
 
-    form?.addEventListener("submit", async (event) => {
+    form?.addEventListener("submit", (event) => {
         event.preventDefault(); // Impede recarregamento da página
 
-        const button = form.querySelector("button[type='submit']");
-        const original = button.textContent;
-        button.disabled = true;
-        button.textContent = "ENVIANDO...";
-        message.textContent = "";
+        const dados = new FormData(form);
+        const campo = (nome) => (dados.get(nome) || "").toString().trim();
 
-        try {
-            // Requisição para o arquivo PHP de e-mail
-            const response = await fetch("enviar.php", {
-                method: "POST",
-                body: new FormData(form)
-            });
+        // Linha só aparece se o campo foi preenchido
+        const opcional = (rotulo, nome) => campo(nome) ? `*${rotulo}:* ${campo(nome)}` : null;
 
-            if (!response.ok) throw new Error("Falha no envio");
+        // Monta a mensagem; campos opcionais vazios ficam de fora
+        const linhas = [
+            "Olá, gostaria de solicitar um orçamento!",
+            "",
+            `*Nome:* ${campo("nome")}`,
+            opcional("Empresa", "empresa"),
+            `*Telefone/WhatsApp:* ${campo("telefone")}`,
+            opcional("E-mail", "email"),
+            `*Serviço:* ${campo("servico")}`,
+            opcional("Veículo", "veiculo"),
+            opcional("Origem", "origem"),
+            opcional("Destino", "destino"),
+            opcional("Período/frequência", "periodo"),
+            "",
+            "*Detalhes da operação:*",
+            campo("mensagem")
+        ].filter(linha => linha !== null);
 
-            message.innerHTML = "<p style='color:#4ade80'>Solicitação enviada com sucesso. Entraremos em contato em breve.</p>";
-            form.reset(); // Limpa o formulário após sucesso
-        } catch {
-            message.innerHTML = "<p style='color:#f87171'>Não foi possível enviar agora. Você pode falar diretamente pelo WhatsApp.</p>";
-        } finally {
-            button.disabled = false;
-            button.textContent = original;
-            // Limpa a mensagem após 7 segundos
-            setTimeout(() => { message.textContent = ""; }, 7000);
-        }
+        const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(linhas.join("\n"))}`;
+
+        // Abre o WhatsApp em nova aba; se o navegador bloquear, abre na mesma aba
+        const janela = window.open(url, "_blank");
+        if (janela) janela.opener = null;
+        else window.location.href = url;
+
+        message.innerHTML = "<p style='color:#4ade80'>Abrindo o WhatsApp com a sua solicitação...</p>";
+        form.reset();
+        setTimeout(() => { message.textContent = ""; }, 7000);
     });
 });
