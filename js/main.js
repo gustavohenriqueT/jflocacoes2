@@ -17,8 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }, observerOptions);
-
-    // Observa todos os elementos com a classe .fade-element
     document.querySelectorAll(".fade-element").forEach(el => {
         scrollObserver.observe(el);
     });
@@ -54,19 +52,15 @@ document.addEventListener("DOMContentLoaded", () => {
     function switchTab(index) {
         if (!tabButtons[index]) return;
         
-        // Remove estado 'active' de todos
         tabButtons.forEach(btn => btn.classList.remove("active"));
         tabPanes.forEach(pane => pane.classList.remove("active"));
         thumbs.forEach(thumb => thumb.classList.remove("active"));
 
-        // Adiciona estado 'active' no item selecionado
         tabButtons[index].classList.add("active");
         const target = tabButtons[index].dataset.target;
         document.getElementById(`tab-${target}`)?.classList.add("active");
         thumbs[index]?.classList.add("active");
         currentIndex = index;
-
-        // Atualiza o botão de interesse para pré-preencher o formulário
         if (interestButton) {
             interestButton.dataset.vehicle = vehicleValues[index];
             interestButton.textContent = `TENHO INTERESSE — ${vehicleNames[index].toUpperCase()}`;
@@ -103,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Inicialização da frota
     switchTab(0);
     startAutoplay();
 
@@ -140,13 +133,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     // ENVIO DO FORMULÁRIO (REDIRECIONA PARA O WHATSAPP COM OS DADOS PREENCHIDOS)
     // ==========================================================================
-    const WHATSAPP_NUMERO = "5519999988434"; // DDI + DDD + número, só dígitos
+    const WHATSAPP_NUMERO = "5511993648272"; // DDI + DDD + número, só dígitos
 
     const form = document.getElementById("form-contato");
     const message = document.getElementById("form-mensagem");
 
     form?.addEventListener("submit", (event) => {
-        event.preventDefault(); // Impede recarregamento da página
+        event.preventDefault();
 
         const dados = new FormData(form);
         const campo = (nome) => (dados.get(nome) || "").toString().trim();
@@ -174,7 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(linhas.join("\n"))}`;
 
-        // Abre o WhatsApp em nova aba; se o navegador bloquear, abre na mesma aba
         const janela = window.open(url, "_blank");
         if (janela) janela.opener = null;
         else window.location.href = url;
