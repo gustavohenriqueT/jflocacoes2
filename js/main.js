@@ -1,137 +1,91 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
-    // ==========================================================================
-    // ANIMAÇÃO DE SCROLL (INTERSECTION OBSERVER)
-    // ==========================================================================
-    // Faz com que os elementos surjam suavemente ao rolar a página
-    const observerOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.15
-    };
-
-    const scrollObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-            }
-        });
-    }, observerOptions);
-    document.querySelectorAll(".fade-element").forEach(el => {
-        scrollObserver.observe(el);
-    });
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ==========================================================================
-    // LÓGICA DA FROTA (TABS E AUTOPLAY)
+    // CONTADORES
+    // Os números só contam uma vez, quando entram na tela. Sem JavaScript
+    // (ou com movimento reduzido) o valor final já está no HTML.
     // ==========================================================================
-    const tabButtons = [...document.querySelectorAll(".tab-btn")];
-    const tabPanes = [...document.querySelectorAll(".tab-pane")];
-    const thumbs = [...document.querySelectorAll(".thumb-item")];
-    const interestButton = document.getElementById("fleet-interest");
-    let currentIndex = 0;
-    let interval;
+    const counters = [...document.querySelectorAll("[data-count]")];
 
-    const vehicleNames = [
-    "Caminhão Toco",
-    "Caminhão Toco",
-    "Caminhão Pipa",
-    "Caminhão Pipa",
-    "Caminhão Baú",
-    "Caminhão Sider"
-    ];
-
-    const vehicleValues = [
-    "Caminhão Toco",
-    "Caminhão Toco",
-    "Caminhão Pipa",
-    "Caminhão Pipa",
-    "Caminhão Baú",
-    "Caminhão Sider"
-    ];
-
-    function switchTab(index) {
-        if (!tabButtons[index]) return;
-        
-        tabButtons.forEach(btn => btn.classList.remove("active"));
-        tabPanes.forEach(pane => pane.classList.remove("active"));
-        thumbs.forEach(thumb => thumb.classList.remove("active"));
-
-        tabButtons[index].classList.add("active");
-        const target = tabButtons[index].dataset.target;
-        document.getElementById(`tab-${target}`)?.classList.add("active");
-        thumbs[index]?.classList.add("active");
-        currentIndex = index;
-        if (interestButton) {
-            interestButton.dataset.vehicle = vehicleValues[index];
-            interestButton.textContent = `TENHO INTERESSE — ${vehicleNames[index].toUpperCase()}`;
-        }
-    }
-
-    // Passador automático das fotos da frota
-    function startAutoplay() {
-        clearInterval(interval);
-        interval = setInterval(() => switchTab((currentIndex + 1) % tabButtons.length), 6500);
-    }
-
-    tabButtons.forEach((button, index) => {
-        button.addEventListener("click", () => {
-            switchTab(index);
-            startAutoplay();
-        });
-    });
-
-    thumbs.forEach((thumb, index) => {
-        thumb.addEventListener("click", () => {
-            switchTab(index);
-            startAutoplay();
-        });
-    });
-
-    // Envia o veículo escolhido para o formulário no clique
-    interestButton?.addEventListener("click", () => {
-        const vehicle = interestButton.dataset.vehicle || "";
-        const select = document.getElementById("veiculo");
-        if (select) {
-            select.value = vehicle;
-            if (!select.value) select.value = "";
+    counters.forEach(el => {
+        // data-since="2006": calcula os anos até hoje, então o número não envelhece
+        if (el.dataset.since) {
+            el.dataset.count = String(new Date().getFullYear() - Number(el.dataset.since));
+            el.textContent = el.dataset.count;
         }
     });
 
-    switchTab(0);
-    startAutoplay();
+    function runCounter(el) {
+        const target = Number(el.dataset.count);
+        const duration = 1400;
+        const start = performance.now();
+        const tick = now => {
+            const t = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - t, 3);
+            el.textContent = String(Math.round(target * eased));
+            if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    }
+
+    if (!reduceMotion && "IntersectionObserver" in window) {
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                runCounter(entry.target);
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.6 });
+        counters.forEach(el => {
+            el.textContent = "0";
+            counterObserver.observe(el);
+        });
+    }
 
     // ==========================================================================
     // MENU MOBILE
     // ==========================================================================
     const menuToggle = document.querySelector(".menu-toggle");
     const nav = document.querySelector(".navbar nav");
-    
+
+    function closeMenu() {
+        nav?.classList.remove("open");
+        menuToggle?.setAttribute("aria-expanded", "false");
+    }
+
     menuToggle?.addEventListener("click", () => {
         const open = nav.classList.toggle("open");
         menuToggle.setAttribute("aria-expanded", String(open));
     });
+    document.querySelectorAll(".nav-links a").forEach(link => link.addEventListener("click", closeMenu));
+    document.addEventListener("keydown", event => { if (event.key === "Escape") closeMenu(); });
 
-    // Fecha o menu mobile ao clicar num link
-    document.querySelectorAll(".nav-links a").forEach(link => {
+    // ==========================================================================
+    // BOTÕES QUE PRÉ-PREENCHEM O FORMULÁRIO
+    // ==========================================================================
+    const selectServico = document.getElementById("servico");
+    const selectVeiculo = document.getElementById("veiculo");
+
+    document.querySelectorAll("[data-service]").forEach(link => {
         link.addEventListener("click", () => {
-            nav?.classList.remove("open");
-            menuToggle?.setAttribute("aria-expanded", "false");
+            if (selectServico && link.dataset.service) selectServico.value = link.dataset.service;
+        });
+    });
+
+    // "Solicitar este veículo" escolhe a locação e o veículo
+    document.querySelectorAll("[data-vehicle]").forEach(link => {
+        link.addEventListener("click", () => {
+            if (selectServico) selectServico.value = "Locação de Caminhões";
+            if (selectVeiculo) {
+                selectVeiculo.value = link.dataset.vehicle || "";
+                if (!selectVeiculo.value) selectVeiculo.value = "";
+            }
         });
     });
 
     // ==========================================================================
-    // BOTÕES "TENHO INTERESSE" (Secção Serviços)
-    // ==========================================================================
-    document.querySelectorAll(".card-link").forEach(link => {
-        link.addEventListener("click", () => {
-            const service = link.dataset.service;
-            const select = document.getElementById("servico");
-            if (select && service) select.value = service;
-        });
-    });
-
-    // ==========================================================================
-    // ENVIO DO FORMULÁRIO (REDIRECIONA PARA O WHATSAPP COM OS DADOS PREENCHIDOS)
+    // ENVIO DO FORMULÁRIO (abre o WhatsApp com os dados preenchidos)
     // ==========================================================================
     const WHATSAPP_NUMERO = "5511993648272"; // DDI + DDD + número, só dígitos
 
@@ -147,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Linha só aparece se o campo foi preenchido
         const opcional = (rotulo, nome) => campo(nome) ? `*${rotulo}:* ${campo(nome)}` : null;
 
-        // Monta a mensagem; campos opcionais vazios ficam de fora
         const linhas = [
             "Olá, gostaria de solicitar um orçamento!",
             "",
@@ -171,8 +124,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (janela) janela.opener = null;
         else window.location.href = url;
 
-        message.innerHTML = "<p style='color:#4ade80'>Abrindo o WhatsApp com a sua solicitação...</p>";
+        message.textContent = "Abrindo o WhatsApp com a sua solicitação...";
+        message.classList.add("is-ok");
         form.reset();
-        setTimeout(() => { message.textContent = ""; }, 7000);
+        setTimeout(() => { message.textContent = ""; message.classList.remove("is-ok"); }, 7000);
     });
 });
